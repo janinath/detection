@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YOLO Video Detection</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f4f4f4;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="file"] {
+      margin: 10px 0;
+    }
+    button {
+      padding: 8px 16px;
+      background: #007bff;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .download-btn {
+      display: inline-block;
+      margin-top: 20px;
+      background: #28a745;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .download-btn:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Upload a Video for YOLO Detection</h2>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="file" name="video" accept="video/*" required>
+      <br>
+      <button type="submit">Upload & Process</button>
+    </form>
+
+    {% if processed_video_url %}
+      <p>✅ Video processed successfully!</p>
+      <a href="{{ processed_video_url }}" download class="download-btn">
+        Download Processed Video
+      </a>
+    {% endif %}
+  </div>
+</body>
+</html>
