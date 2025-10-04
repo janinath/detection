@@ -65,7 +65,7 @@ def process_video(input_path, output_path):
 
     fps = cap.get(cv2.CAP_PROP_FPS) or 20.0
     width, height = int(cap.get(3)), int(cap.get(4))
-    fourcc = cv2.VideoWriter_fourcc(*"XVID")
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
     while True:
@@ -95,7 +95,7 @@ def upload_video(request):
         # Output path
         output_dir = os.path.join(settings.MEDIA_ROOT, "outputs")
         os.makedirs(output_dir, exist_ok=True)
-        output_filename = "processed_" + filename.split(".")[0] + ".avi"
+        output_filename = "processed_" + filename.split(".")[0] + ".mp4v"
         output_path = os.path.join(output_dir, output_filename)
 
         # Process video
