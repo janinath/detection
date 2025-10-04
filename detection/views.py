@@ -105,3 +105,57 @@ def upload_video(request):
         processed_video_url = f"{settings.MEDIA_URL}outputs/{output_filename}"
 
     return render(request, "detection/upload.html", {"processed_video_url": processed_video_url})
+
+
+# def upload_video(request):
+#     processed_video_url = None
+
+#     if request.method == 'POST' and request.FILES.get('video'):
+#         video = request.FILES['video']
+#         fs = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'uploads'))
+#         filename = fs.save(video.name, video)
+#         uploaded_file_path = fs.path(filename)
+
+#         # Output directory
+#         output_dir = os.path.join(settings.MEDIA_ROOT, 'outputs')
+#         os.makedirs(output_dir, exist_ok=True)
+
+#         # --- START: cross-platform video processing setup ---
+#         cap = cv2.VideoCapture(uploaded_file_path)
+#         fps = cap.get(cv2.CAP_PROP_FPS) or 20
+#         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+#         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+#         import platform
+#         if platform.system() == "Windows":
+#             fourcc = cv2.VideoWriter_fourcc(*"XVID")
+#             ext = ".avi"
+#         else:
+#             fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+#             ext = ".mp4"
+
+#         output_filename = f"processed_{os.path.splitext(filename)[0]}{ext}"
+#         output_path = os.path.join(output_dir, output_filename)
+#         out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+#         # --- END setup ---
+
+#         # Process video frames
+#         while True:
+#             ret, frame = cap.read()
+#             if not ret:
+#                 break
+
+#             # If you have YOLO detection, call it here:
+#             # frame = yolo_detect(frame)
+
+#             out.write(frame)
+
+#         cap.release()
+#         out.release()
+
+#         # URL for downloading
+#         processed_video_url = settings.MEDIA_URL + 'outputs/' + output_filename
+
+#     return render(request, 'detection/upload.html', {
+#         'processed_video_url': processed_video_url
+#     })
