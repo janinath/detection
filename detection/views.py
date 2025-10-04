@@ -95,7 +95,7 @@ def upload_video(request):
         # Output path
         output_dir = os.path.join(settings.MEDIA_ROOT, "outputs")
         os.makedirs(output_dir, exist_ok=True)
-        output_filename = "processed_" + filename.split(".")[0] + ".mp4v"
+        output_filename = "processed_" + filename.split(".")[0] + ".mp4"
         output_path = os.path.join(output_dir, output_filename)
 
         # Process video
